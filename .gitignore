@@ -1,3 +1,5 @@
 .DS_Store
 data
 *.pyc
+.venv
+.ipynb_checkpoints/*
