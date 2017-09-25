@@ -1,3 +1,5 @@
+g1 = set(globals())
+
 import pylab as pl
 import matplotlib.pyplot as plt
 
@@ -6,6 +8,8 @@ pl.rcParams['figure.figsize'] = (8, 6)
 from lcf import parse_lcf
 import os.path as osp
 import os
+
+from IPython.display import display, Markdown, Latex, HTML
 
 ipython = get_ipython()
 ipython.magic('matplotlib inline')
@@ -39,5 +43,26 @@ def plot_fit(slug):
     d['fit'].plot(style=['--'], title='%s' % slug)
     plt.figure()
 
-def print_available():
-    print 'Available data: \n%s' % '\n'.join([f for f in all_files if f.endswith('.lcf')])
+def show_available():
+    display(Markdown('Available data: \n\n%s' % '\n'.join(['* `%s`' % f for f in all_files if f.endswith('.lcf')])))
+
+
+def add_hide():
+    display(HTML('''<script>
+        var code_show=false; //true -> show code at first
+
+        function code_toggle() {
+            $('div.prompt').hide(); // always hide prompt
+
+            if (code_show){
+                $('div.input').hide();
+            } else {
+                $('div.input').show();
+            }
+            code_show = !code_show
+        }
+        $( document ).ready(code_toggle);
+    </script><a href="javascript:code_toggle()">[Toggle Code]</a>'''))
+
+add_hide()
+display(Markdown('Available globals: %s' % ','.join(('`%s`' % g for g in  set(globals()) - g1))))
