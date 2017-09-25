@@ -11,6 +11,8 @@ import os
 
 from IPython.display import display, Markdown, Latex, HTML
 
+plt.style.use(['seaborn-white', 'fivethirtyeight', './maureen.mplstyle'])
+
 ipython = get_ipython()
 ipython.magic('matplotlib inline')
 ipython.magic("config InlineBackend.figure_format = 'retina'") # png or retina'
