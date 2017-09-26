@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 g1 = set(globals())
 
 import pylab as pl
@@ -10,6 +12,8 @@ import os.path as osp
 import os
 
 from IPython.display import display, Markdown, Latex, HTML
+from ipywidgets import interact, interactive, fixed, interact_manual
+import ipywidgets as widgets
 
 ipython = get_ipython()
 ipython.magic('matplotlib inline')
@@ -54,8 +58,12 @@ def plot_fit(slug):
     d['fit'].plot(style=['--'], color=['#FF0000'], title='%s - %s' % (dirname.split('/')[-1], slug))
     plt.figure()
 
+
+def get_available():
+    return [f for f in all_files if f.endswith('.lcf')]
+
 def show_available():
-    display(Markdown('Available data: \n\n%s' % '\n'.join(['* `%s`' % f for f in all_files if f.endswith('.lcf')])))
+    display(Markdown('Available data: \n\n%s' % '\n'.join(['* `%s`' % f for f in get_available()])))
 
 
 def add_hide():
