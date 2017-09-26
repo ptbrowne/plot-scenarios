@@ -5,7 +5,9 @@ axes.edgecolor: cbcbcb
 
 savefig.facecolor   : white
 figure.facecolor    : white
-font.serif         : Computer Modern Roman, Times, Palatino, New Century Schoolbook, Bookman
+font.serif         : Fantasy
 font.sans-serif    : Calibri
 font.cursive       : Zapf Chancery
 font.monospace     : Computer Modern Typewriter, Courier
+
+axes.prop_cycle: cycler('color', ['1f77b4', 'ff7f0e', '2ca02c', 'd62728', '9467bd', '8c564b', 'e377c2', '7f7f7f', 'bcbd22', '17becf'])

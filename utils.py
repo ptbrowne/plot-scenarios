@@ -3,7 +3,7 @@ g1 = set(globals())
 import pylab as pl
 import matplotlib.pyplot as plt
 
-pl.rcParams['figure.figsize'] = (8, 6)
+pl.rcParams['figure.figsize'] = (10, 8)
 
 from lcf import parse_lcf
 import os.path as osp
@@ -11,15 +11,16 @@ import os
 
 from IPython.display import display, Markdown, Latex, HTML
 
-plt.style.use(['seaborn-white', 'fivethirtyeight', './maureen.mplstyle'])
-
 ipython = get_ipython()
 ipython.magic('matplotlib inline')
-ipython.magic("config InlineBackend.figure_format = 'retina'") # png or retina'
+ipython.magic("config InlineBackend.figure_format = 'png'") # png or retina'
 
 global dirname
 global all_files
 global noise
+
+def set_style():
+    plt.style.use(['seaborn-white', 'fivethirtyeight', './maureen.mplstyle'])
 
 def set_dirname(new_dirname):
     global dirname, all_files, noise
@@ -42,7 +43,7 @@ def compare(slug1, slug2):
 def plot_fit(slug):
     d = parse_lcf(get_file(slug))
     d['data'].plot()
-    d['fit'].plot(style=['--'], title='%s' % slug)
+    d['fit'].plot(style=['--'], color=['C3'], title='%s' % slug)
     plt.figure()
 
 def show_available():
@@ -66,5 +67,10 @@ def add_hide():
         $( document ).ready(code_toggle);
     </script><a href="javascript:code_toggle()">[Toggle Code]</a>'''))
 
+def show_globals():
+    new_globals = set(globals()) - g1 - set([osp, pl])
+    display(Markdown('Available globals: %s' % ','.join(('`%s`' % g for g in new_globals))))
+    
+set_style()
 add_hide()
-display(Markdown('Available globals: %s' % ','.join(('`%s`' % g for g in  set(globals()) - g1))))
+show_globals()
