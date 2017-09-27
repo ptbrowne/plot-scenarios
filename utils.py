@@ -31,13 +31,21 @@ def set_dirname(new_dirname):
 def get_file(filter):
     return osp.join(dirname, [f for f in all_files if filter in f][0])
 
-def compare(slug1, slug2):
+def compare(slug1, slug2, res=False):
     f1 = get_file(slug1)
     f2 = get_file(slug2)
     data = parse_lcf(f1)
     data2 = parse_lcf(f2) 
-    (data['fit'] - data2['fit']).plot()
-    noise['chi_re'].plot(title='%s vs %s' % (slug1, slug2))
+    delta = (data['fit'] - data2['fit']).plot()
+    noise['chi_re'].plot(title='%s - %s vs %s' % (dirname.split('/')[-1], slug1, slug2))
+
+    legend = ['delta', 'noise']
+    if res:
+        res1 = data['residual'].abs().plot()
+        res2 = data2['residual'].abs().plot()
+        legend += ['res %s' % slug1, 'res %s' % slug2]
+
+    plt.legend(legend)
     plt.figure()
 
 def plot_fit(slug):
