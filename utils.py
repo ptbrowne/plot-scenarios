@@ -51,7 +51,7 @@ def compare(slug1, slug2, res=False):
 def plot_fit(slug):
     d = parse_lcf(get_file(slug))
     d['data'].plot()
-    d['fit'].plot(style=['--'], color=['C3'], title='%s' % slug)
+    d['fit'].plot(style=['--'], color=['#FF0000'], title='%s - %s' % (dirname.split('/')[-1], slug))
     plt.figure()
 
 def show_available():
