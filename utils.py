@@ -32,12 +32,12 @@ def set_dirname(new_dirname):
     all_files = os.listdir(dirname)
     noise = parse_lcf(get_file('bruit.chiq'))
 
-def get_file(filter):
-    return osp.join(dirname, [f for f in all_files if filter in f][0])
+def get_file(filter, ext=None):
+    return osp.join(dirname, [f for f in all_files if filter in f and (ext is None or f.endswith(ext))][0])
 
 def compare(slug1, slug2, res=False):
-    f1 = get_file(slug1)
-    f2 = get_file(slug2)
+    f1 = get_file(slug1, 'lcf')
+    f2 = get_file(slug2, 'lcf')
     data = parse_lcf(f1)
     data2 = parse_lcf(f2) 
     delta = (data['fit'] - data2['fit']).plot()
@@ -52,6 +52,7 @@ def compare(slug1, slug2, res=False):
     plt.legend(legend)
     plt.figure()
 
+
 def plot_fit(slug):
     d = parse_lcf(get_file(slug))
     d['data'].plot()
@@ -61,6 +62,7 @@ def plot_fit(slug):
 
 def get_available():
     return [f for f in all_files if f.endswith('.lcf')]
+
 
 def show_available():
     display(Markdown('Available data: \n\n%s' % '\n'.join(['* `%s`' % f for f in get_available()])))
